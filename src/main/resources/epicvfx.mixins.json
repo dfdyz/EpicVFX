@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_21",
+  "package": "com.dfdyz.epicvfx.mixins",
+  "client": [
+    "MixinParticleEngine",
+    "accessor.AraTrailParticleAccessor"
+  ],
+  "mixins": [
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "epicvfx.mixins.refmap.json"
+}
