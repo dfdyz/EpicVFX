@@ -36,6 +36,7 @@ public class EFPatchExecutor extends FXEffectExecutor {
         this.entityPatch = entityPatch;
         this.poseGetter = poseGetter;
         setAllowMulti(true);
+        setForcedDeath(true);
     }
 
     @Override
