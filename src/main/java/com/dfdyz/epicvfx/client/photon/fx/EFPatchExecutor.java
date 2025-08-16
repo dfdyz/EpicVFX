@@ -1,7 +1,9 @@
 package com.dfdyz.epicvfx.client.photon.fx;
 
+import com.lowdragmc.lowdraglib2.editor.ui.sceneeditor.sceneobject.ISceneObject;
 import com.lowdragmc.photon.client.fx.FX;
 import com.lowdragmc.photon.client.fx.FXEffectExecutor;
+import com.lowdragmc.photon.client.gameobject.FXObject;
 import com.lowdragmc.photon.client.gameobject.IFXObject;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
@@ -40,12 +42,26 @@ public class EFPatchExecutor extends FXEffectExecutor {
     public void updateFXObjectTick(IFXObject fxObject) {
         if (runtime != null && fxObject == runtime.root) {
             if (!entityPatch.getOriginal().isAlive()) {
-                runtime.destroy(forcedDeath);
-                CACHE.computeIfAbsent(entityPatch, p -> new ArrayList<>()).remove(this);
-                if (CACHE.get(entityPatch).isEmpty()) {
-                    CACHE.remove(entityPatch);
+                destroy();
+            }
+
+            boolean isAlive = false;
+            for (IFXObject sceneObject : runtime.getObjects().values()) {
+                if(sceneObject == runtime.root) continue;
+                if(sceneObject instanceof FXObject fxO){
+                    isAlive = isAlive || fxO.isAlive();
                 }
             }
+            if(!isAlive) destroy();
+        }
+    }
+
+    protected void destroy(){
+        //System.out.println("Destroyed.");
+        runtime.destroy(forcedDeath);
+        CACHE.computeIfAbsent(entityPatch, p -> new ArrayList<>()).remove(this);
+        if (CACHE.get(entityPatch).isEmpty()) {
+            CACHE.remove(entityPatch);
         }
     }
 
@@ -77,7 +93,7 @@ public class EFPatchExecutor extends FXEffectExecutor {
         Vec3 pos = entityPatch.getOriginal().getPosition(partialTicks);
         OpenMatrix4f modelTf = OpenMatrix4f.createTranslation((float)pos.x, (float)pos.y, (float)pos.z)
                 .rotateDeg(180.0F, Vec3f.Y_AXIS)
-                .mulBack(entityPatch.getModelMatrix(1));
+                .mulBack(entityPatch.getModelMatrix(partialTicks));
 
         var finalTf = poseGetter.handle(entityPatch, partialTicks).mulFront(modelTf);
 
@@ -110,7 +126,7 @@ public class EFPatchExecutor extends FXEffectExecutor {
         }
         this.runtime = fx.createRuntime();
 
-        updateRoot(0);
+        updateRoot(1);
 
         this.runtime.emmit(this, delay);
         effects.add(this);
