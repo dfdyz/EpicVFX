@@ -86,7 +86,7 @@ dependencies {
     implementation "libs:ldlib2-neoforge-1.21.1:2.0.3-all"
     implementation "libs:photon-neoforge-1.21.1:2.0.4"
 
-    implementation "libs:epicfight:21.11.2"
+    implementation "libs:epicfight:21.12.1"
 
  /*   compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'*/

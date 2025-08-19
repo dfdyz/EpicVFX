@@ -65,7 +65,7 @@ public class EFTrailParticle extends AraTrailParticle {
             float pet = animPlayer.getPrevElapsedTime();
             float ret = (cet - pet) * partialTicks + pet;
 
-            if(ret <= tInfo.startTime()){
+            if(ret <= tInfo.startTime() - 0.02f){
                 return ;
             }
         }

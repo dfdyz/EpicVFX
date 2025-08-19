@@ -71,7 +71,7 @@ public class EFPatchExecutor extends FXEffectExecutor {
             //var position = entitypatch.getOriginal().getPosition(partialTicks);
             Animator animator = entitypatch.getAnimator();
             Pose pose = animator.getPose(partialTicks);
-            OpenMatrix4f JointTf = new OpenMatrix4f(entitypatch.getArmature().getBindedTransformFor(pose, joint));
+            OpenMatrix4f JointTf = new OpenMatrix4f(entitypatch.getArmature().getBoundTransformFor(pose, joint));
             return JointTf;
         };
     }
@@ -97,10 +97,10 @@ public class EFPatchExecutor extends FXEffectExecutor {
                 .mulBack(entityPatch.getModelMatrix(partialTicks));
 
         var finalTf = poseGetter.handle(entityPatch, partialTicks).mulFront(modelTf);
-
         var euler = finalTf.toQuaternion().getEulerAnglesZXY(new Vector3f());
+
         runtime.root.updatePos(OpenMatrix4f.transform(finalTf, Vec3.ZERO).toVector3f());
-        runtime.root.updateRotation(new Quaternionf().rotateZ(-euler.z).rotateX(-euler.x).rotateLocalY(-euler.y));
+        runtime.root.updateRotation(new Quaternionf().rotateZ(-euler.z).rotateX(euler.x).rotateLocalY(-euler.y));
         runtime.root.updateScale(finalTf.toScaleVector().toMojangVector());
     }
 

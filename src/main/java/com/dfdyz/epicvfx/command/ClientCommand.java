@@ -43,7 +43,7 @@ public class ClientCommand {
             var player = Minecraft.getInstance().player;
             var patch = EpicFightCapabilities.getEntityPatch(player, LocalPlayerPatch.class);
 
-            var fx = FXHelper.getFX(ResourceLocation.fromNamespaceAndPath("photon", "test"));
+            var fx = FXHelper.getFX(ResourceLocation.fromNamespaceAndPath("photon", "space_broken"));
 
             var biped = Armatures.BIPED;
             var executor = new EFPatchExecutor(fx, player.level() ,patch, EFPatchExecutor.GetJointHandler(biped.get().toolR));
