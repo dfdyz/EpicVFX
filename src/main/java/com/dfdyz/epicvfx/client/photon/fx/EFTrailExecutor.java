@@ -34,10 +34,28 @@ public class EFTrailExecutor extends EFPatchExecutor{
         this.setAllowMulti(true);
     }
 
+    @Override
+    public void updateFXObjectTick(IFXObject fxObject) {
+        super.updateFXObjectTick(fxObject);
+
+    }
+
     public boolean canContinue() {
         AnimationPlayer animPlayer = entityPatch.getAnimator().getPlayerFor(this.animation);
         return entityPatch.getOriginal().isAlive()
                 && this.animation == animPlayer.getRealAnimation()
                 && animPlayer.getElapsedTime() <= this.trailInfo.endTime();
+    }
+
+    public boolean canContinue(float pt) {
+        AnimationPlayer animPlayer = entityPatch.getAnimator().getPlayerFor(this.animation);
+
+        float cet = animPlayer.getElapsedTime();
+        float pet = animPlayer.getPrevElapsedTime();
+        float ret = (cet - pet) * pt + pet;
+
+        return entityPatch.getOriginal().isAlive()
+                && this.animation == animPlayer.getRealAnimation()
+                && ret <= this.trailInfo.endTime() + 0.02f;
     }
 }

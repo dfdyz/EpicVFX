@@ -84,7 +84,7 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
     implementation "libs:ldlib2-neoforge-1.21.1:2.0.3-all"
-    implementation "libs:photon-neoforge-1.21.1:2.0.4"
+    implementation "libs:photon-neoforge-1.21.1:2.0.5"
 
     implementation "libs:epicfight:21.12.1"
 

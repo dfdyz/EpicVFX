@@ -54,8 +54,7 @@ public class EFTrailParticle extends AraTrailParticle {
         return this.emitter.getDeltaTime() / 20.0F;
     }
 
-    @Override
-    public void render(VertexConsumer buffer, Camera camera, float partialTicks) {
+    private boolean started(float partialTicks){
         if(efTrailExecutor != null){
             var animPlayer = efTrailExecutor.entityPatch.getAnimator()
                     .getPlayerFor(efTrailExecutor.animation);
@@ -66,15 +65,32 @@ public class EFTrailParticle extends AraTrailParticle {
             float ret = (cet - pet) * partialTicks + pet;
 
             if(ret <= tInfo.startTime() - 0.02f){
-                return ;
+                return false;
             }
         }
+        return true;
+    }
+
+
+
+    @Override
+    public void render(VertexConsumer buffer, Camera camera, float partialTicks) {
+        //if(!started(partialTicks)) return;
 
         float deltaTime = getDeltaTime();
         THIS.I_updateDynamicData(partialTicks);
-        if (deltaTime > 1.0E-7F) {
+
+        boolean removed = false;
+        if(efTrailExecutor != null && !efTrailExecutor.canContinue(partialTicks)){
+            removed = true;
+        }
+
+        if (deltaTime > EPSILON) {
             THIS.I_updateVelocity(deltaTime);
-            if(!shouldRemove) THIS.I_emissionStep(deltaTime);
+            if(!removed && started(partialTicks))
+            {
+                THIS.I_emissionStep(deltaTime);
+            }
             THIS.I_snapLastPointToTransform();
             THIS.I_updatePointsLifecycle(deltaTime);
         }

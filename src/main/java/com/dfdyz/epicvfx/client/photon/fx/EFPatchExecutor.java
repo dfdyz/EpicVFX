@@ -100,7 +100,7 @@ public class EFPatchExecutor extends FXEffectExecutor {
         var euler = finalTf.toQuaternion().getEulerAnglesZXY(new Vector3f());
 
         runtime.root.updatePos(OpenMatrix4f.transform(finalTf, Vec3.ZERO).toVector3f());
-        runtime.root.updateRotation(new Quaternionf().rotateZ(-euler.z).rotateX(euler.x).rotateLocalY(-euler.y));
+        runtime.root.updateRotation(new Quaternionf().rotateX(-euler.x).rotateZ(-euler.z).rotateLocalY(-euler.y));
         runtime.root.updateScale(finalTf.toScaleVector().toMojangVector());
     }
 
