@@ -1,6 +1,7 @@
 package com.dfdyz.epicvfx.client.photon.gameobject.particle.ef_trail;
 
 import com.dfdyz.epicvfx.client.photon.fx.EFTrailExecutor;
+import com.dfdyz.epicvfx.client.photon.gameobject.emitter.ef_trail.EFTrailConfig;
 import com.dfdyz.epicvfx.mixins.accessor.AraTrailParticleAccessor;
 import com.lowdragmc.photon.client.gameobject.emitter.IParticleEmitter;
 import com.lowdragmc.photon.client.gameobject.emitter.aratrail.AraTrailConfig;
@@ -15,11 +16,12 @@ public class EFTrailParticle extends AraTrailParticle {
     public EFTrailExecutor efTrailExecutor;
     public final AraTrailParticleAccessor THIS;
 
-    public EFTrailParticle(IParticleEmitter emitter, AraTrailConfig config) {
+    public EFTrailParticle(IParticleEmitter emitter, EFTrailConfig config) {
         super(emitter, config);
         if(emitter.getEffectExecutor() instanceof EFTrailExecutor patchExecutor){
             efTrailExecutor = patchExecutor;
-            this.setLifetimeSupplier(this::getLiftTimeEF);
+            if(config.useEFLifetime())
+                this.setLifetimeSupplier(this::getLiftTimeEF);
             this.lifeTick = efTrailExecutor.trailInfo.trailLifetime();
         }
         this.THIS = (AraTrailParticleAccessor) this;

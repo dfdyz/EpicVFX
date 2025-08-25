@@ -163,5 +163,8 @@ public class EFTrailEmitter extends Emitter {
         if (force) {
             trailParticle.clear();
         }
+        if(config.isDestroyRootOnDeath() && effectExecutor instanceof EFPatchExecutor efPatchExecutor){
+            efPatchExecutor.destroy();
+        }
     }
 }

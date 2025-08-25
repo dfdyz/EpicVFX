@@ -1,3 +1,7 @@
 {
-  "ef_trail_emitter": "EpicFight Trail(AraTrail)"
+  "ef_trail_emitter": "EpicFight Trail(AraTrail)",
+  "EF_TRAIL.use_EF_lifetime": "Use EF Trail Lifetime",
+  "epicvfx.emitter.config.use_EF_lifetime": "Use EF's TrailInfo to setup points lifetime",
+  "destroy_root_on_death": "Destroy EF Executor On Death",
+  "epicvfx.emitter.config.destroy_root_on_death": "Destroy EF Executor On Death"
 }

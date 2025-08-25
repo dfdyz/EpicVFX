@@ -25,6 +25,8 @@ public class EFPatchExecutor extends FXEffectExecutor {
     public final LivingEntityPatch<?> entityPatch;
     public final JointPoseGetter poseGetter;
 
+    private boolean destroyed = false;
+
     @FunctionalInterface
     public interface JointPoseGetter{
         OpenMatrix4f handle(LivingEntityPatch<?> entityPatch, float partialTicks);
@@ -57,7 +59,9 @@ public class EFPatchExecutor extends FXEffectExecutor {
         }
     }
 
-    protected void destroy(){
+    public void destroy(){
+        if(destroyed) return;
+        destroyed = true;
         //System.out.println("Destroyed.");
         runtime.destroy(forcedDeath);
         CACHE.computeIfAbsent(entityPatch, p -> new ArrayList<>()).remove(this);
